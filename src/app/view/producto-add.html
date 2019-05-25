@@ -1,0 +1,49 @@
+<h3>{{titulo}}</h3>
+<hr>
+<!-- [formGroup]="formProducto" -->
+<form #formProduct="ngForm" (ngSubmit)="onSubmit()" class="col-lg-6" id="form-producto">
+
+    <label>
+        Nombre:
+        <span class="badge badge-danger" *ngIf="!nombre.valid && nombre.touched">
+            <!-- *ngIf="!nombre.pristine && nombre.touched" -->
+            El campo nombre es obligatorio
+        </span>
+    </label>
+    <input type="text" #nombre="ngModel" name="nombre" [(ngModel)]="producto.nombre" class="form-control" required />
+    <!-- #nombre="ngModel" -->
+
+
+    <label>
+        Descripcion:
+        <span class="badge badge-danger" *ngIf="!description.valid && description.touched">
+            <!-- *ngIf="!description.pristine && description.touched" -->
+            El campo descripcion es obligatorio.
+        </span>
+    </label>
+    <textarea #description="ngModel" name="description" [(ngModel)]="producto.description" class="form-control"
+        required></textarea> <!-- #description="ngModel" -->
+
+    <label>
+        Precio:
+        <span class="badge badge-danger" *ngIf="!precio.valid && precio.touched">
+            <!-- *ngIf="!precio.pristine && precio.touched" -->
+            El campo precio no es correcto.
+        </span>
+    </label>
+    <input type="text" #precio="ngModel" name="precio" [(ngModel)]="producto.precio" class="form-control" required
+        pattern="[0-9]+" /> <!-- #precio="ngModel" -->
+
+    <label>Imagen:</label>
+    <div *ngIf="is_edit">
+        <img class="imagen_container" style="width: 60px;"
+            src="http://localhost/cursoangular4-backend/uploads/{{producto.imagen}}" />
+        
+    </div>
+    <br>
+    <input type="file" name="pick" class="form-control" (change)="onFileChange($event)" />
+
+    <br>
+    <input type="submit" value="{{titulo}}" [disabled]="!formProduct.valid" class="btn btn-success">
+
+</form>
